@@ -1,7 +1,8 @@
-#include "stdafx.h"
+#define GMMODULE
 #include "Interface.h"
 #include "discord_rpc.h"
-#include <string>
+#include <stdio.h>
+#include <string.h>
 #pragma comment(lib, "discord-rpc.lib")
 //discord::Core* core{};
 
