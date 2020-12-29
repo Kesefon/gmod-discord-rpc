@@ -1,3 +1,5 @@
+# This fork maintains compatibility with the original lua script. Please use [fluffy-servers/gmod-discord-rpc](https://github.com/fluffy-servers/gmod-discord-rpc) for new setups.
+
 # Garry's Mod Discord Rich Presence
  Provides Discord Rich Presence support to Garry's Mod
  
@@ -8,10 +10,10 @@
  Clients need to put the *gmcl_fluffydiscord_\*.dll* corresponding to the game's version in **lua/bin/**
   
  ### LUA Addon (Servers)
- Servers need to install a LUA script that syncs the game details to Discord.
- This can optionally be installed by players for support of single player games
+ Servers need to install a Lua script that syncs the game details to Discord.
+ This can optionally be installed by players for support of single player or P2P games.
  
- This .lua file needs to go in lua/autorun/client/
+ This .lua file needs to go in `lua/autorun/client/` Installing this file on the server will have no effect on clients who do not have the required module installed.
  
  ## Configuration
  ### Setting up an Application
@@ -40,7 +42,7 @@
  2. The default configuration should be "x86-Release" for the 32bit version\
  If you want the 64bit version select the "x64-Release" configuration
  3. Select `Build` -> `Build All`
- 4. The .dll should now be in `gmod-discord-rpc/cpp/build/\*-Release/`
+ 4. The .dll should now be in `gmod-discord-rpc/cpp/build/*-Release/`
  ### Linux
  1. Make sure you have git, cmake, and gcc installed
  2. Open a terminal and run
