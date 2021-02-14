@@ -3,10 +3,10 @@ project(gmod-discord-rpc)
 set(CMAKE_CXX_STANDARD 14)
 
 if(UNIX)
-	if(64BIT)
-        set(CMAKE_CXX_FLAGS "-Os -fPIC")
+    if(64BIT)
+        set(CMAKE_CXX_FLAGS "-O3 -s -fPIC")
     else()
-    	set(CMAKE_CXX_FLAGS "-m32 -Os -s")
+        set(CMAKE_CXX_FLAGS "-m32 -O3 -s")
     endif()
 endif()
 
