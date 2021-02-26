@@ -46,7 +46,7 @@ function DiscordUpdate()
             rpc_data["smallImageText"] = role_name
         end
 
-        if is_haste then
+        if HasteMode() then
             rpc_data["endTimestamp"] = math.floor(os.time() + GetGlobalFloat("ttt_haste_end", 0) - CurTime())
         else
             rpc_data["endTimestamp"] = math.floor(os.time() + GetGlobalFloat("ttt_round_end", 0) - CurTime())
