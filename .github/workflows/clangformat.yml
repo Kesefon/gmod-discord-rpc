@@ -9,7 +9,7 @@ on:
     - master
     
 jobs:
-  lua_lint:
+  cpp_lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
