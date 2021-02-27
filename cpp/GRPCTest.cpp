@@ -11,39 +11,39 @@ std::pair<int, char> cbError;
 char cbJoinSecret;
 char cbSpectateSecret;
 DiscordUser cbJoinRequest;
-bool cbConUserTriggerd, cbDisconnectedTriggerd, cbErrorTriggerd, cbJoinTriggerd,
-    cbSpectateTriggerd, cbJoinRequestTriggerd;
+bool cbConUserTriggered, cbDisconnectedTriggered, cbErrorTriggered,
+    cbJoinTriggered, cbSpectateTriggered, cbJoinRequestTriggered;
 
 static void HandleDiscordReady(const DiscordUser *connectedUser) {
     cbConUser = *connectedUser;
-    cbConUserTriggerd = true;
+    cbConUserTriggered = true;
 }
 
 static void HandleDiscordDisconnected(int errcode, const char *message) {
     cbDisconnected.first = errcode;
     cbDisconnected.second = *message;
-    cbDisconnectedTriggerd = true;
+    cbDisconnectedTriggered = true;
 }
 
 static void HandleDiscordError(int errcode, const char *message) {
     cbError.first = errcode;
     cbError.second = *message;
-    cbConUserTriggerd = true;
+    cbConUserTriggered = true;
 }
 
 static void HandleDiscordJoin(const char *secret) {
     cbJoinSecret = *secret;
-    cbJoinTriggerd = true;
+    cbJoinTriggered = true;
 }
 
 static void HandleDiscordSpectate(const char *secret) {
     cbSpectateSecret = *secret;
-    cbSpectateTriggerd = true;
+    cbSpectateTriggered = true;
 }
 
 static void HandleDiscordJoinRequest(const DiscordUser *request) {
     cbJoinRequest = *request;
-    cbJoinRequestTriggerd = true;
+    cbJoinRequestTriggered = true;
 }
 
 LUA_FUNCTION(StartDiscordStatus) {
@@ -69,62 +69,60 @@ LUA_FUNCTION(RunDiscordCallbacks) {
     Discord_RunCallbacks();
     LUA->PushSpecial(GarrysMod::Lua::SPECIAL_GLOB);
     LUA->GetField(-1, "hook");
-    if (cbConUserTriggerd) {
+    if (cbConUserTriggered) {
         LUA->GetField(-1, "Run");
         LUA->PushString("DiscordReady");
         LUA->PushString(cbConUser.userId);
         LUA->PushString(cbConUser.username);
         LUA->PushString(cbConUser.discriminator);
         LUA->PushString(cbConUser.avatar);
-        LUA->PushString(cbConUser.username);
-        LUA->Call(6, 0);
-        cbConUserTriggerd = false;
+        LUA->Call(5, 0);
+        cbConUserTriggered = false;
     }
 
-    if (cbDisconnectedTriggerd) {
+    if (cbDisconnectedTriggered) {
         LUA->GetField(-1, "Run");
         LUA->PushString("DiscordDisconnected");
         LUA->PushNumber(cbDisconnected.first);
         LUA->PushString(&cbDisconnected.second);
         LUA->Call(3, 0);
-        cbDisconnectedTriggerd = false;
+        cbDisconnectedTriggered = false;
     }
 
-    if (cbErrorTriggerd) {
+    if (cbErrorTriggered) {
         LUA->GetField(-1, "Run");
         LUA->PushString("DiscordError");
         LUA->PushNumber(cbError.first);
         LUA->PushString(&cbError.second);
         LUA->Call(3, 0);
-        cbErrorTriggerd = false;
+        cbErrorTriggered = false;
     }
 
-    if (cbJoinTriggerd) {
+    if (cbJoinTriggered) {
         LUA->GetField(-1, "Run");
         LUA->PushString("DiscordJoin");
         LUA->PushString(&cbJoinSecret);
         LUA->Call(2, 0);
-        cbJoinTriggerd = false;
+        cbJoinTriggered = false;
     }
 
-    if (cbSpectateTriggerd) {
+    if (cbSpectateTriggered) {
         LUA->GetField(-1, "Run");
         LUA->PushString("DiscordSpectate");
         LUA->PushString(&cbSpectateSecret);
         LUA->Call(2, 0);
-        cbSpectateTriggerd = false;
+        cbSpectateTriggered = false;
     }
 
-    if (cbJoinRequestTriggerd) {
+    if (cbJoinRequestTriggered) {
         LUA->GetField(-1, "Run");
         LUA->PushString("DiscordJoinRequest");
         LUA->PushString(cbJoinRequest.userId);
         LUA->PushString(cbJoinRequest.username);
         LUA->PushString(cbJoinRequest.discriminator);
         LUA->PushString(cbJoinRequest.avatar);
-        LUA->PushString(cbJoinRequest.username);
-        LUA->Call(6, 0);
-        cbJoinRequestTriggerd = false;
+        LUA->Call(5, 0);
+        cbJoinRequestTriggered = false;
     }
 
     LUA->Pop(2);
